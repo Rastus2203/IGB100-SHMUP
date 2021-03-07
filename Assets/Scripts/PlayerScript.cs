@@ -9,6 +9,8 @@ public class PlayerScript : MonoBehaviour
     public float acceleration = 0.15f;
     public float deceleration = 0.03f;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +20,13 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         doMovement();
 
     }
+
+
+
 
     void doMovement()
     {
@@ -48,13 +54,16 @@ public class PlayerScript : MonoBehaviour
             if (currentSpeed[0] > maxSpeed) currentSpeed[0] = maxSpeed;
         }
 
-
+        //Player is constantly slowing down. Friction???
         if (currentSpeed[0] > 0) currentSpeed[0] -= deceleration * Time.deltaTime;
         if (currentSpeed[0] < 0) currentSpeed[0] += deceleration * Time.deltaTime;
         if (currentSpeed[1] > 0) currentSpeed[1] -= deceleration * Time.deltaTime;
         if (currentSpeed[1] < 0) currentSpeed[1] += deceleration * Time.deltaTime;
 
-
-        transform.Translate(currentSpeed);
+        //Moves the player
+        //transform.Translate(currentSpeed);
+        transform.position = transform.position + new Vector3(currentSpeed.x, currentSpeed.y, 0);
     }
+
+
 }
