@@ -5,27 +5,80 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     public Vector2 currentSpeed = new Vector2(0, 0);
-    public float maxSpeed = 0.04f;
-    public float acceleration = 0.15f;
-    public float deceleration = 0.03f;
+    public float maxSpeed = 0.18f;
+    public float acceleration = 0.25f;
+    public float deceleration = 0.08f;
 
+    public int collisions;
+
+    float minX;
+    float maxX;
+    float minY;
+    float maxY;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        float camDistance = Vector3.Distance(transform.position, Camera.main.transform.position);
+        Vector2 bottomCorner = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, camDistance));
+        Vector2 topCorner = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, camDistance));
 
+
+        minX = bottomCorner.x;
+        maxX = topCorner.x;
+        minY = bottomCorner.y;
+        maxY = topCorner.y;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         doMovement();
+        checkBoundaryCollision();
 
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("hit");
+    }
 
+    //If player has moved outside the bounds of the screen, set their speed in that direction to 0 and move them back to the border.
+    void checkBoundaryCollision()
+    {
+        //Google tells me I get marginally better performance if I store the position in temporary variables instead of reading transform.position multiple times.
+        //Can't imagine it will matter but why not?
+        Vector3 position = transform.position;
+        float x = position.x;
+        float y = position.y;
+        float z = position.z;
+
+
+        if (x > maxX)
+        {
+            transform.position = (new Vector3(maxX, y, z));
+            currentSpeed[0] = 0;
+        }
+
+        if (x < minX)
+        {
+            transform.position = (new Vector3(minX, y, z));
+            currentSpeed[0] = 0;
+        }
+            
+        if (y > maxY)
+        {
+            transform.position = (new Vector3(x, maxY, z));
+            currentSpeed[1] = 0;
+        }
+
+        if (y < minY)
+        {
+            transform.position = (new Vector3(x, minY, z));
+            currentSpeed[1] = 0;
+        }
+    }
 
 
     void doMovement()
