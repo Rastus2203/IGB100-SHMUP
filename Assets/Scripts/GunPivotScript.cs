@@ -40,11 +40,18 @@ public class GunPivotScript : MonoBehaviour
             Debug.Log("shoot");
 
             GameObject bullet = Instantiate(playerBullet) as GameObject;
-            //Debug.Log(typeof(bullet));
             Debug.Log(bullet);
-            bullet.GetComponent<BulletScript>().init();
-            //BulletScript playerBulletObj = bullet.GetComponent<BulletScript>();
-            //bullet.init();
+
+            float mouseDeltaMagnitude = Mathf.Sqrt((mouseDelta.x * mouseDelta.x) + (mouseDelta.y * mouseDelta.y));
+
+
+
+            Vector2 normalMouseDelta = mouseDelta / mouseDeltaMagnitude;
+            Debug.Log(mouseDeltaMagnitude);
+
+            Vector2 position = new Vector2(transform.position.x, transform.position.y);
+            bullet.GetComponent<BulletScript>().init(normalMouseDelta, transform.position, false);
+
 
         }
         
