@@ -6,15 +6,20 @@ public class PlayerScript : MonoBehaviour
 {
     public Vector2 currentSpeed = new Vector2(0, 0);
     public float maxSpeed = 0.18f;
-    public float acceleration = 0.25f;
+    public float acceleration = 0.1f;
     public float deceleration = 0.08f;
 
     public int collisions;
+
+    float immunityLength;
+    float lastImmunity;
 
     float minX;
     float maxX;
     float minY;
     float maxY;
+
+    public float health = 100;
 
 
     // Start is called before the first frame update
@@ -39,8 +44,33 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
+        float currentTime = Time.time;
+
+        if (currentTime - lastImmunity > immunityLength)
+        {
+            lastImmunity = currentTime;
+            GameObject otherParent = other.gameObject;
+            otherScript = otherParent.
+        }
+
+
+        Debug.Log("hit");
+    }*/
+
+    void damageCollider(float damage)
+    {
+        float currentTime = Time.time;
+
+        if (currentTime - lastImmunity > immunityLength)
+        {
+            lastImmunity = currentTime;
+            health -= damage;
+        }
+
+
         Debug.Log("hit");
     }
 

@@ -9,7 +9,7 @@ public class ChaserScript : MonoBehaviour
     float minY;
     float maxY;
 
-
+    float damage = 5;
 
     GameObject player;
     Vector3 lookVect;
@@ -76,6 +76,17 @@ public class ChaserScript : MonoBehaviour
 
 
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            other.SendMessage("damageCollider", damage);
+            Destroy(this.gameObject);
+        }
+        
+    }
+
 
 
     void turnToPlayer()

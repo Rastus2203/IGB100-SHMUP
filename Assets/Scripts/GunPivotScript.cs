@@ -37,17 +37,14 @@ public class GunPivotScript : MonoBehaviour
         if ((currentTime - lastShotTime) > (1 / fireRate))
         {
             lastShotTime = currentTime;
-            Debug.Log("shoot");
 
             GameObject bullet = Instantiate(playerBullet) as GameObject;
-            Debug.Log(bullet);
 
             float mouseDeltaMagnitude = Mathf.Sqrt((mouseDelta.x * mouseDelta.x) + (mouseDelta.y * mouseDelta.y));
 
 
 
             Vector2 normalMouseDelta = mouseDelta / mouseDeltaMagnitude;
-            Debug.Log(mouseDeltaMagnitude);
 
             Vector2 position = new Vector2(transform.position.x, transform.position.y);
             bullet.GetComponent<BulletScript>().init(normalMouseDelta, transform.position, false);
