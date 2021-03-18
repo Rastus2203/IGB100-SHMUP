@@ -10,11 +10,16 @@ public class BulletScript : MonoBehaviour
     public Vector2 velocity;
     public Vector2 direction;
 
+    float damage = 20;
 
     float minX;
     float maxX;
     float minY;
     float maxY;
+
+    string[] enemyTags = {"chaser", "shooter"};
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +58,28 @@ public class BulletScript : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log(string.Format("Collision with {0}", other.tag));
+        if (inArray(enemyTags, other.tag))
+        {
+            other.SendMessage("damageCollider", damage);
+            Destroy(this.gameObject);
+        }
+
+    }
+
+    bool inArray(string[] strArray, string str)
+    {
+        for (int i=0; i < strArray.Length; i++)
+        {
+            if (str == strArray[i])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     //Not sure if there's a better way to pass arguements into a prefab.
     //This method is designed to be called directly after instantiating the prefab as a way of passing arguements.

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class healthbarScript : MonoBehaviour
+public class playerHealthbarScript : MonoBehaviour
 {
     public GameObject player;
     PlayerScript pScript;

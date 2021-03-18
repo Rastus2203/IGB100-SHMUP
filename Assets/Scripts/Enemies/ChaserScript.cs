@@ -19,6 +19,9 @@ public class ChaserScript : MonoBehaviour
     public float distanceScalar = 10;
     public float a;
 
+    public float health = 1;
+    public float maxHealth = 1;   
+
     public float angleDelta;
 
     Rigidbody objRigidBody;
@@ -59,6 +62,15 @@ public class ChaserScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        checkDead();
+        Transform parent = transform.parent;
+        GameObject healthbar = parent.Find("genericHealthbar/HealthProgress").gameObject;
+        healthbar.SendMessage("updateBar", health / maxHealth);
+
+        healthbar.SendMessage("updatePosition", transform);
+        
+
+
         turnToPlayer();
 
         //Current direction of this object
@@ -82,9 +94,22 @@ public class ChaserScript : MonoBehaviour
         if (other.tag == "Player")
         {
             other.SendMessage("damageCollider", damage);
-            Destroy(this.gameObject);
+            Destroy(transform.parent.gameObject);
         }
         
+    }
+
+    void checkDead()
+    {
+        if (health <= 0)
+        {
+            Destroy(transform.parent.gameObject);
+        }
+    }
+
+    void damageCollider(float damage)
+    {
+        health -= damage;
     }
 
 
