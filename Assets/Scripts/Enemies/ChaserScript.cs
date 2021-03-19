@@ -14,10 +14,9 @@ public class ChaserScript : MonoBehaviour
     GameObject player;
     Vector3 lookVect;
     public float lookAngle;
-    public float speed = 1;
-    public float rotateScalar = 20;
+    public float speed = 5;
+    public float rotateScalar = 1;
     public float distanceScalar = 10;
-    public float a;
 
     public float health = 1;
     public float maxHealth = 1;   
@@ -119,7 +118,7 @@ public class ChaserScript : MonoBehaviour
         //Slowly rotate object to face the player
 
         float distance = (30 - Vector3.Distance(transform.position, player.transform.position)) * distanceScalar;
-        a = distance;
+
 
         //Current direction of this object
         float currentAngle = transform.eulerAngles.z;
