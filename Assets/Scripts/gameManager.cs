@@ -5,9 +5,19 @@ using UnityEngine;
 
 public class gameManager : MonoBehaviour
 {
-    public int currentWave = 0;
-    public int waveState = 0;
-    public List<Action> waves = new List<Action>();
+    int currentWave = 0;
+    int waveState = 0;
+    bool waveInit = false;
+    bool waveInProgress = false;
+    int deathCount;
+    int maxLength;
+    int deathsToContinue;
+    float waveStartTime;
+
+    List<Action> waves = new List<Action>();
+
+    public GameObject ShooterParent;
+    public GameObject ChaserParent;
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +27,6 @@ public class gameManager : MonoBehaviour
         waves.Add(() => wave3());
 
 
-        currentWave = UnityEngine.Random.Range(0, waves.Count);
-        waves[currentWave]();
 
 
     }
@@ -26,12 +34,72 @@ public class gameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!waveInProgress)
+        {
+            currentWave = UnityEngine.Random.Range(0, waves.Count);
+            currentWave = 0;
+        }
+
+        waves[currentWave]();
+
+    }
+
+    public void destroyed()
+    {
+        deathCount++;
+        Debug.Log("dead");
     }
 
     void wave1()
     {
         Debug.Log("1");
+
+        if (waveState == 0)
+        {
+            if (!waveInit)
+            {
+                waveStartTime = Time.time;
+                maxLength = 30;
+                deathsToContinue = 3;
+                waveInit = true;
+
+                spawnShooter(new Vector3(11, 7, 0));
+                spawnShooter(new Vector3(11, 0, 0));
+                spawnShooter(new Vector3(11, -7, 0));
+                spawnShooter(new Vector3(-11, 7, 0));
+                spawnShooter(new Vector3(-11, 0, 0));
+                spawnShooter(new Vector3(-11, -7, 0));
+            }
+
+
+            if ((Time.time - waveStartTime > maxLength) || (deathCount >= deathsToContinue))
+            {
+                waveState = 1;
+                waveInit = false;
+            }
+        } else if (waveState == 1)
+        {
+            if (!waveInit)
+            {
+                waveStartTime = Time.time;
+                maxLength = 5;
+                deathsToContinue = 5;
+                waveInit = true;
+
+                spawnChaser(new Vector3(0, 5, 0));
+                spawnChaser(new Vector3(-5.5f, 4.5f, 0));
+                spawnChaser(new Vector3(5.5f, 4.5f, 0));
+                spawnChaser(new Vector3(-6.5f, -7, 0));
+                spawnChaser(new Vector3(6.5f, -7, 0));
+
+
+            }
+            if ((Time.time - waveStartTime > maxLength) || (deathCount >= deathsToContinue))
+            {
+                waveState = 2;
+                waveInit = false;
+            }
+        }
     }
 
     void wave2()
@@ -42,6 +110,22 @@ public class gameManager : MonoBehaviour
     void wave3()
     {
         Debug.Log("3");
+    }
+
+
+    void spawnShooter(Vector3 position)
+    {
+        GameObject temp = Instantiate(ShooterParent).transform.GetChild(0).gameObject as GameObject;
+
+        temp.GetComponent<shooterScript>().init(position);
+    }
+
+
+    void spawnChaser(Vector3 position)
+    {
+        GameObject temp = Instantiate(ChaserParent).transform.GetChild(0).gameObject as GameObject;
+
+        temp.GetComponent<ChaserScript>().init(position);
     }
 
 

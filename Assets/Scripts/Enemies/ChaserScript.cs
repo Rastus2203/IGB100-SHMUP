@@ -58,6 +58,15 @@ public class ChaserScript : MonoBehaviour
 
     }
 
+
+    //Not sure if there's a better way to pass arguements into a prefab.
+    //This method is designed to be called directly after instantiating the prefab as a way of passing arguements.
+    public void init(Vector3 spawnPosition)
+    {
+        transform.position = spawnPosition;
+    }
+
+
     // Update is called once per frame
     void Update()
     {
