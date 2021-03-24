@@ -11,8 +11,13 @@ public class PlayerScript : MonoBehaviour
 
     public int collisions;
 
-    float immunityLength;
-    float lastImmunity;
+    float immunityLength = 0.5f;
+    float lastImmunity = -10;
+
+    float dashCooldown = 1;
+    float lastDash = -10;
+    float dashScalar = 10;
+    public float dashBarProgress = 0;
 
     float minX;
     float maxX;
@@ -40,25 +45,43 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         doMovement();
+        doDash();
         checkBoundaryCollision();
 
     }
 
-    /*
-    private void OnTriggerEnter2D(Collider2D other)
+    void doDash()
     {
         float currentTime = Time.time;
-
-        if (currentTime - lastImmunity > immunityLength)
+        dashBarProgress = ((currentTime - lastDash) / dashCooldown) * 100;
+        if (dashBarProgress > 100)
         {
-            lastImmunity = currentTime;
-            GameObject otherParent = other.gameObject;
-            otherScript = otherParent.
+            dashBarProgress = 100;
         }
 
 
-        Debug.Log("hit");
-    }*/
+
+
+        
+        if (Input.GetKey("space") && (currentTime - lastDash > dashCooldown))
+        {
+            lastDash = currentTime;
+            Vector3 mousePosition3 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePosition2 = new Vector2(mousePosition3.x, mousePosition3.y);
+            Vector2 currentPosition = transform.position;
+            Vector2 mouseDelta = mousePosition2 - currentPosition;
+
+            Vector2 mouseDeltaAdj = (mouseDelta / mouseDelta.magnitude) * dashScalar;
+            
+
+            Vector3 position = transform.position;
+            float x = position.x;
+            float y = position.y;
+            float z = position.z;
+
+            transform.position = new Vector3(x + mouseDeltaAdj.x, y + mouseDeltaAdj.y, z);
+        }
+    }
 
     void damageCollider(float damage)
     {
