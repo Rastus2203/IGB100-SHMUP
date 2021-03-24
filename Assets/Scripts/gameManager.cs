@@ -18,6 +18,7 @@ public class gameManager : MonoBehaviour
 
     public GameObject ShooterParent;
     public GameObject ChaserParent;
+    public GameObject bossParent;
 
     // Start is called before the first frame update
     void Start()
@@ -82,8 +83,8 @@ public class gameManager : MonoBehaviour
             if (!waveInit)
             {
                 waveStartTime = Time.time;
-                maxLength = 5;
-                deathsToContinue = 5;
+                maxLength = 999;
+                deathsToContinue = 11;
                 waveInit = true;
 
                 spawnChaser(new Vector3(0, 5, 0));
@@ -98,6 +99,17 @@ public class gameManager : MonoBehaviour
             {
                 waveState = 2;
                 waveInit = false;
+            }
+        } else if (waveState == 2)
+        {
+            if (!waveInit)
+            {
+                waveStartTime = Time.time;
+                maxLength = 999;
+                deathsToContinue = 999;
+                waveInit = true;
+
+                spawnBoss();
             }
         }
     }
@@ -126,6 +138,12 @@ public class gameManager : MonoBehaviour
         GameObject temp = Instantiate(ChaserParent).transform.GetChild(0).gameObject as GameObject;
 
         temp.GetComponent<ChaserScript>().init(position);
+    }
+
+    void spawnBoss()
+    {
+        Debug.Log("boss");
+        GameObject temp = Instantiate(bossParent).transform.GetChild(0).gameObject as GameObject;
     }
 
 

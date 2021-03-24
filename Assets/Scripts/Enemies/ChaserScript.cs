@@ -15,22 +15,22 @@ public class ChaserScript : MonoBehaviour
     Vector3 lookVect;
     public float lookAngle;
     public float speed = 5;
-    public float rotateScalar = 1;
+    public float rotateScalar = -1;
     public float distanceScalar = 10;
 
     public float health = 1;
-    public float maxHealth = 1;   
+    public float maxHealth = 1;
 
     public float angleDelta;
 
     Rigidbody objRigidBody;
-
+    GameObject manager;
 
     // Start is called before the first frame update
     void Start()
     {
         objRigidBody = GetComponent<Rigidbody>();
-
+        manager = GameObject.FindWithTag("GameController");
 
         float camDistance = Vector3.Distance(transform.position, Camera.main.transform.position);
         Vector2 bottomCorner = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, camDistance));
@@ -76,7 +76,7 @@ public class ChaserScript : MonoBehaviour
         healthbar.SendMessage("updateBar", health / maxHealth);
 
         healthbar.SendMessage("updatePosition", transform);
-        
+
 
 
         turnToPlayer();
@@ -102,9 +102,11 @@ public class ChaserScript : MonoBehaviour
         if (other.tag == "Player")
         {
             other.SendMessage("damageCollider", damage);
+            manager.GetComponent<gameManager>().destroyed();
             Destroy(transform.parent.gameObject);
+
         }
-        
+
     }
 
     void checkDead()
@@ -112,6 +114,7 @@ public class ChaserScript : MonoBehaviour
         if (health <= 0)
         {
             Destroy(transform.parent.gameObject);
+            manager.GetComponent<gameManager>().destroyed();
         }
     }
 

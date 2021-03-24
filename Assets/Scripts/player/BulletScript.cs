@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour
     float minY;
     float maxY;
 
-    string[] enemyTags = {"chaser", "shooter", "roamer"};
+    string[] enemyTags = {"chaser", "shooter", "roamer", "boss"};
 
 
 
