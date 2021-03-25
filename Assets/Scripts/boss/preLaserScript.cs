@@ -5,7 +5,7 @@ using UnityEngine;
 public class preLaserScript : MonoBehaviour
 {
     float spawnTime;
-    float waitLength = 1.5f;
+    float waitLength = 2.5f;
 
 
 

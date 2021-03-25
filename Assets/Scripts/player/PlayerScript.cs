@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -44,10 +45,19 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        checkDeath();
         doMovement();
         doDash();
         checkBoundaryCollision();
 
+    }
+
+    void checkDeath()
+    {
+        if (health <= 0)
+        {   
+            SceneManager.LoadScene("deathScene");
+        }
     }
 
     void doDash()

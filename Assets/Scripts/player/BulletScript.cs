@@ -5,12 +5,11 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
 
-    public bool isEnemy;
     public float speedScalar = 30f;
     public Vector2 velocity;
     public Vector2 direction;
 
-    float damage = 20;
+    float damage;
 
     float minX;
     float maxX;
@@ -83,11 +82,11 @@ public class BulletScript : MonoBehaviour
 
     //Not sure if there's a better way to pass arguements into a prefab.
     //This method is designed to be called directly after instantiating the prefab as a way of passing arguements.
-    public void init(Vector2 ownerDirection, Vector3 ownerPosition, bool owner)
+    public void init(Vector2 ownerDirection, Vector3 ownerPosition, float parentDamage)
     {
         direction = ownerDirection;
         transform.position = ownerPosition;
         velocity = ownerDirection * speedScalar * Time.deltaTime;
-        isEnemy = owner;
+        damage = parentDamage;
     }
 }

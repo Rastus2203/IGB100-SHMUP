@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class shooterGunScript : MonoBehaviour
+public class bossGunScript : MonoBehaviour
 {
     GameObject player;
 
@@ -31,7 +31,7 @@ public class shooterGunScript : MonoBehaviour
             lastShotTime = currentTime;
             GameObject bullet = Instantiate(enemyBullet) as GameObject;
 
-            float currentAngle = transform.eulerAngles.z + 90;
+            float currentAngle = transform.eulerAngles.z;
             Vector2 currentAngleVect = new Vector2(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad));
 
             bullet.GetComponent<enemyBulletScript>().init(currentAngleVect, transform.position, false);
@@ -46,7 +46,7 @@ public class shooterGunScript : MonoBehaviour
     {
         Vector3 lookVect = player.transform.position - transform.position;
         transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, 0));
-        float lookAngle = Mathf.Atan2(lookVect.y, lookVect.x) * Mathf.Rad2Deg - 90;
+        float lookAngle = Mathf.Atan2(lookVect.y, lookVect.x) * Mathf.Rad2Deg;
         transform.Rotate(0, 0, lookAngle, Space.Self);
     }
 }

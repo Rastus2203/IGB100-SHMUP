@@ -8,6 +8,7 @@ public class GunPivotScript : MonoBehaviour
     public float rotationAngle;
     float lastShotTime;
     float fireRate;
+    public float damage;
 
     public GameObject playerBullet;
 
@@ -15,7 +16,8 @@ public class GunPivotScript : MonoBehaviour
     void Start()
     {
         lastShotTime = Time.time;
-        fireRate = 1;
+        fireRate = 5;
+        damage = 10;
     }
 
     // Update is called once per frame
@@ -47,7 +49,7 @@ public class GunPivotScript : MonoBehaviour
             Vector2 normalMouseDelta = mouseDelta / mouseDeltaMagnitude;
 
             Vector2 position = new Vector2(transform.position.x, transform.position.y);
-            bullet.GetComponent<BulletScript>().init(normalMouseDelta, transform.position, false);
+            bullet.GetComponent<BulletScript>().init(normalMouseDelta, transform.position, damage);
 
 
         }

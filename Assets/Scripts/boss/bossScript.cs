@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class bossScript : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class bossScript : MonoBehaviour
     float minY;
     float maxY;
 
-    float laserSpawnRate = 0.4f;
+    float laserSpawnRate = 0.3f;
     float lastLaser = 0;
 
     GameObject manager;
@@ -23,7 +24,6 @@ public class bossScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
 
 
         float camDistance = Vector3.Distance(transform.position, Camera.main.transform.position);
@@ -45,7 +45,7 @@ public class bossScript : MonoBehaviour
     {
         health = currentHealth / maxHealth * 100;
 
-
+        checkDead();
         doLaser();
     }
 
@@ -80,9 +80,11 @@ public class bossScript : MonoBehaviour
     {
         if (health <= 0)
         {
+            SceneManager.LoadScene("winScene");
             Destroy(transform.parent.gameObject);
-
             manager.GetComponent<gameManager>().destroyed();
+
+
         }
     }
 }

@@ -19,6 +19,7 @@ public class gameManager : MonoBehaviour
     public GameObject ShooterParent;
     public GameObject ChaserParent;
     public GameObject bossParent;
+    public GameObject roamerParent;
 
     // Start is called before the first frame update
     void Start()
@@ -60,7 +61,7 @@ public class gameManager : MonoBehaviour
             if (!waveInit)
             {
                 waveStartTime = Time.time;
-                maxLength = 30;
+                maxLength = 20;
                 deathsToContinue = 3;
                 waveInit = true;
 
@@ -83,8 +84,8 @@ public class gameManager : MonoBehaviour
             if (!waveInit)
             {
                 waveStartTime = Time.time;
-                maxLength = 999;
-                deathsToContinue = 11;
+                maxLength = 5;
+                deathsToContinue = 8;
                 waveInit = true;
 
                 spawnChaser(new Vector3(0, 5, 0));
@@ -101,6 +102,31 @@ public class gameManager : MonoBehaviour
                 waveInit = false;
             }
         } else if (waveState == 2)
+        {
+            if (!waveInit)
+            {
+                waveStartTime = Time.time;
+                maxLength = 999;
+                deathsToContinue = 18;
+                waveInit = true;
+
+                spawnChaser(new Vector3(0, 5, 0));
+                spawnChaser(new Vector3(-5.5f, 4.5f, 0));
+                spawnChaser(new Vector3(5.5f, 4.5f, 0));
+                spawnChaser(new Vector3(-6.5f, -7, 0));
+                spawnChaser(new Vector3(6.5f, -7, 0));
+
+                spawnRoamer(new Vector3(15, 0, 0));
+                spawnRoamer(new Vector3(-15, 0, 0));
+
+
+            }
+            if ((Time.time - waveStartTime > maxLength) || (deathCount >= deathsToContinue))
+            {
+                waveState = 3;
+                waveInit = false;
+            }
+        } else if (waveState == 3)
         {
             if (!waveInit)
             {
@@ -138,6 +164,13 @@ public class gameManager : MonoBehaviour
         GameObject temp = Instantiate(ChaserParent).transform.GetChild(0).gameObject as GameObject;
 
         temp.GetComponent<ChaserScript>().init(position);
+    }
+
+    void spawnRoamer(Vector3 position)
+    {
+        GameObject temp = Instantiate(roamerParent).transform.GetChild(0).gameObject as GameObject;
+
+        temp.GetComponent<roamerScript>().init(position);
     }
 
     void spawnBoss()

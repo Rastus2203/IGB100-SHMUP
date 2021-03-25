@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa6b7c241b45f04f835a9c41b8521ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  health: 60
   maxHealth: 60
 --- !u!61 &5592096852927056568
 BoxCollider2D:
@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4430e889bbb7cf04790dee5d5d240d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  angleOffset: 0
   enemyBullet: {fileID: 8980168681960094718, guid: fbbe73f4864399d4f901ff1e8cccee32, type: 3}
 --- !u!1001 &6301050582931361865
 PrefabInstance:

@@ -3,7 +3,11 @@ guid: 43cbf9f3b733bb3428069010a04a8930
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ShooterParent: {instanceID: 0}
+  - ChaserParent: {instanceID: 0}
+  - bossParent: {instanceID: 0}
+  - roamerParent: {fileID: 8239875045932787091, guid: 2f6e2a1b8b3c7e949afcd1a73a6a5638, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
